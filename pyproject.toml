@@ -1,0 +1,46 @@
+[project]
+name = "xontrib-fzf-completions"
+description = "fzf completions for xonsh"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007" }
+keywords = ["shell", "xonsh", "xontrib"]
+authors = [
+    { name = "doronz88", email = "doron88@gmail.com" }
+]
+maintainers = [
+    { name = "doronz88", email = "doron88@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Topic :: Desktop Environment",
+    "Topic :: System :: Shells",
+    "Topic :: System :: System Shells",
+]
+dynamic = ["dependencies", "version"]
+
+[project.urls]
+"Homepage" = "https://github.com/doronz88/xontrib-fzf-completions"
+"Bug Reports" = "https://github.com/doronz88/xontrib-fzf-completions/issues"
+
+[tool.setuptools]
+package-data = { "xontrib_fzf_completions" = ['xontrib/*.xsh'] }
+
+[tool.setuptools.packages.find]
+exclude = ["docs*", "tests*"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+version = {attr = "_fzf_completions_version.__version__"}
+
+[tool.setuptools_scm]
+version_file = "_fzf_completions_version.py"
+
+[build-system]
+requires = ["setuptools>=43.0.0", "setuptools_scm>=8", "wheel"]
+build-backend = "setuptools.build_meta"
