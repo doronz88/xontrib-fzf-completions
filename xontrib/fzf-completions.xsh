@@ -1,23 +1,24 @@
 import os
 import re
 import subprocess
+import shutil
 from xonsh.history.main import history_main
-from xonsh.completers.path import _complete_path_raw
+from xonsh.completers.path import complete_path
 from prompt_toolkit.keys import Keys
 
 __all__ = ()
 
 def get_fzf_binary_name():
     fzf_tmux_cmd = 'fzf-tmux'
-    if 'TMUX' in ${...} and $(which fzf_tmux_cmd):
+    if 'TMUX' in os.environ and shutil.which(fzf_tmux_cmd):
         return fzf_tmux_cmd
     return 'fzf'
 
 
 def get_fzf_binary_path():
-    path = $(which @(get_fzf_binary_name()))
+    path = shutil.which(get_fzf_binary_name())
     if not path:
-        raise Exception("Could not determine path of fzf using `which`; maybe it is not installed or not on PATH?")
+        raise Exception("Could not determine path of fzf using PATH; maybe it is not installed or not on PATH?")
     return path
 
 
@@ -63,7 +64,7 @@ def fzf_insert_file(event, dirs_only=False):
     cwd = None
     path = ''
     if prefix:
-        paths = _complete_path_raw(os.path.normpath(prefix), before_cursor, 0, len(before_cursor), None)[0]
+        paths = complete_path(os.path.normpath(prefix), before_cursor, 0, len(before_cursor), None)[0]
         if len(paths) == 1:
             path = paths.pop()
             expanded_path = os.path.expanduser(path)
